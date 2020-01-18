@@ -4,11 +4,11 @@
     "type": "library",
     "license": "MIT",
     "authors": [
-        {
-            "name": "Jewel Rana",
-            "email": "jewelrana.dev@gmail.com"
-        }
-    ],
-    "minimum-stability": "dev",
-    "require": {}
+{
+    "name": "Jewel Rana",
+    "email": "jewelrana.dev@gmail.com"
+}
+],
+"minimum-stability": "dev",
+"require": {}
 }
