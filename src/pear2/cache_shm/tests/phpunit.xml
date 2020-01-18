@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit
+    bootstrap="bootstrap.php"
+    colors="false"
+    stopOnFailure="false"
+    verbose="true"
+    strict="true"
+    
+    convertErrorsToExceptions="true"
+    convertNoticesToExceptions="true"
+    convertWarningsToExceptions="true"
+>
+    <!--
+    convertErrorsToExceptions="false"
+    convertNoticesToExceptions="false"
+    convertWarningsToExceptions="false"
+>
+    -->
+    <testsuites>
+        <testsuite name="All tests">
+            <directory suffix=".phpt">PHPT</directory>
+        </testsuite>
+    </testsuites>
+    <filter>
+        <whitelist>
+            <directory suffix=".php">../src/PEAR2/Cache/SHM</directory>
+            <file>../src/PEAR2/Cache/SHM.php</file>
+        </whitelist>
+    </filter>
+</phpunit>

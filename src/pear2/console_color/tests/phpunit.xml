@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit
+    bootstrap="bootstrap.php"
+    colors="false"
+    stopOnFailure="false"
+    verbose="true"
+    strict="true"
+
+    convertErrorsToExceptions="true"
+    convertNoticesToExceptions="true"
+    convertWarningsToExceptions="true"
+>
+    <!--
+    convertErrorsToExceptions="false"
+    convertNoticesToExceptions="false"
+    convertWarningsToExceptions="false"
+>
+    -->
+    <testsuites>
+        <testsuite name="All Tests">
+            <file>ConstructorTest.php</file>
+            <file>ObjectTest.php</file>
+        </testsuite>
+    </testsuites>
+    <filter>
+        <whitelist>
+            <directory suffix=".php">../src/PEAR2/Console/Color</directory>
+            <file>../src/PEAR2/Console/Color.php</file>
+            <exclude>
+              <!-- No executable code present. -->
+              <file>../src/PEAR2/Console/Color/Backgrounds.php</file>
+              <file>../src/PEAR2/Console/Color/Exception.php</file>
+              <file>../src/PEAR2/Console/Color/Fonts.php</file>
+              <file>../src/PEAR2/Console/Color/UnexpectedValueException.php</file>
+            </exclude>
+        </whitelist>
+    </filter>
+</phpunit>

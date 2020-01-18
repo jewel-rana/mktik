@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<package version="2.1" xmlns="http://pear.php.net/dtd/package-2.1" xmlns:tasks="http://pear.php.net/dtd/tasks-1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0     http://pear.php.net/dtd/tasks-1.0.xsd     http://pear.php.net/dtd/package-2.1     http://pear.php.net/dtd/package-2.1.xsd">
+ <name>PEAR2_Console_Color</name>
+ <channel>pear2.php.net</channel>
+ <summary>This Package provide a easy way to print text with color and style in command line.
+</summary>
+ <description>
+It has a simple interface, whereby you just create an object with the color and style information you want,
+and it will automatically be converted to an escape sequence when used as a string.</description>
+ <lead>
+  <name>Ivo Nascimento</name>
+  <user>ivonascimento</user>
+  <email>ivo@o8o.com.br</email>
+  <active>yes</active>
+ </lead>
+ <lead>
+  <name>Vasil Rangelov</name>
+  <user>boen_robot</user>
+  <email>boen.robot@gmail.com</email>
+  <active>yes</active>
+ </lead>
+ <date>2014-03-02</date>
+ <time>15:18:34</time>
+ <version>
+  <release>1.0.0</release>
+  <api>0.2.0</api>
+ </version>
+ <stability>
+  <release>stable</release>
+  <api>stable</api>
+ </stability>
+ <license uri="http://www.opensource.org/licenses/bsd-license.php">New BSD License</license>
+ <notes>First stable release.&#13;
+&#13;
+(complete rewrite from the alpha)</notes>
+ <contents>
+  <dir name="/">
+   <dir name="docs" baseinstalldir="/">
+    <file role="doc" name="apigen.neon"/>
+    <file role="doc" name="doxygen.ini"/>
+    <file role="doc" name="phpdoc.dist.xml"/>
+   </dir>
+   <dir name="src" baseinstalldir="/">
+    <dir name="PEAR2">
+     <dir name="Console">
+      <dir name="Color">
+       <file role="php" name="Backgrounds.php">
+        <tasks:replace from="GIT: $Id$" to="version" type="package-info"/>
+       </file>
+       <file role="php" name="Exception.php">
+        <tasks:replace from="GIT: $Id$" to="version" type="package-info"/>
+       </file>
+       <file role="php" name="Flags.php">
+        <tasks:replace from="GIT: $Id$" to="version" type="package-info"/>
+       </file>
+       <file role="php" name="Fonts.php">
+        <tasks:replace from="GIT: $Id$" to="version" type="package-info"/>
+       </file>
+       <file role="php" name="Styles.php">
+        <tasks:replace from="GIT: $Id$" to="version" type="package-info"/>
+       </file>
+       <file role="php" name="UnexpectedValueException.php">
+        <tasks:replace from="GIT: $Id$" to="version" type="package-info"/>
+       </file>
+      </dir>
+      <file role="php" name="Color.php">
+       <tasks:replace from="GIT: $Id$" to="version" type="package-info"/>
+      </file>
+     </dir>
+    </dir>
+   </dir>
+   <dir name="tests" baseinstalldir="/">
+    <file role="test" name="bootstrap.php">
+     <tasks:replace from="../src" to="php_dir" type="pear-config"/>
+    </file>
+    <file role="test" name="ConstructorTest.php"/>
+    <file role="test" name="ObjectTest.php"/>
+    <file role="test" name="phpunit.xml">
+     <tasks:replace from="../src" to="php_dir" type="pear-config"/>
+    </file>
+   </dir>
+  </dir>
+ </contents>
+ <dependencies>
+  <required>
+   <php>
+    <min>5.3.0</min>
+   </php>
+   <pearinstaller>
+    <min>1.4.0</min>
+   </pearinstaller>
+  </required>
+  <optional>
+   <package>
+    <name>PEAR2_Autoload</name>
+    <channel>pear2.php.net</channel>
+   </package>
+  </optional>
+ </dependencies>
+ <phprelease>
+  <filelist>
+   <install name="docs/apigen.neon" as="apigen.neon"/>
+   <install name="docs/doxygen.ini" as="doxygen.ini"/>
+   <install name="docs/phpdoc.dist.xml" as="phpdoc.dist.xml"/>
+   <install name="src/PEAR2/Console/Color.php" as="PEAR2/Console/Color.php"/>
+   <install name="src/PEAR2/Console/Color/Backgrounds.php" as="PEAR2/Console/Color/Backgrounds.php"/>
+   <install name="src/PEAR2/Console/Color/Exception.php" as="PEAR2/Console/Color/Exception.php"/>
+   <install name="src/PEAR2/Console/Color/Flags.php" as="PEAR2/Console/Color/Flags.php"/>
+   <install name="src/PEAR2/Console/Color/Fonts.php" as="PEAR2/Console/Color/Fonts.php"/>
+   <install name="src/PEAR2/Console/Color/Styles.php" as="PEAR2/Console/Color/Styles.php"/>
+   <install name="src/PEAR2/Console/Color/UnexpectedValueException.php" as="PEAR2/Console/Color/UnexpectedValueException.php"/>
+   <install name="tests/bootstrap.php" as="bootstrap.php"/>
+   <install name="tests/ConstructorTest.php" as="ConstructorTest.php"/>
+   <install name="tests/ObjectTest.php" as="ObjectTest.php"/>
+   <install name="tests/phpunit.xml" as="phpunit.xml"/>
+  </filelist>
+ </phprelease>
+</package>

@@ -1,0 +1,14 @@
+source: ../src
+
+destination: PEAR2_Console_Color__ApiGen_Documentation
+
+extensions: php
+
+charset: UTF-8
+
+title: PEAR2_Console_Color documentation
+
+autocomplete:
+    - classes
+    - methods
+    - classconstants

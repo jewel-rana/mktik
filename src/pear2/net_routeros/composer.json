@@ -1,0 +1,48 @@
+{
+    "name": "pear2/net_routeros",
+    "description": "This package allows you to read and write information from a RouterOS host using MikroTik's RouterOS API.",
+    "keywords": ["routeros", "package", "api", "mikrotik", "pear2", "router"],
+    "homepage": "http://pear2.github.com/Net_RouterOS/",
+    "license": "LGPL-2.1",
+    "authors": [
+        {
+            "name": "Vasil Rangelov",
+            "email": "boen.robot@gmail.com",
+            "role": "lead"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/pear2/Net_RouterOS/issues",
+        "wiki": "https://github.com/pear2/Net_RouterOS/wiki"
+    },
+    "require": {
+        "php": ">=5.3.0",
+        "pear2/net_transmitter": ">=1.0.0b1"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "@stable",
+        "squizlabs/php_codesniffer": "@stable",
+        "pear2/cache_shm": "dev-develop",
+        "pear2/console_commandline": "dev-master",
+        "pear2/console_color": "dev-develop"
+    },
+    "suggest": {
+        "pear2/cache_shm": "Enables persistent connections.",
+        "pear2/console_commandline": "Enables the console",
+        "pear2/console_color": "Enables colors in the console",
+        "ext-apc": "This, APCu or Wincache is required for persistent connections.",
+        "ext-apcu": "This, APC or Wincache is required for persistent connections.",
+        "ext-wincache": "This, APC or APCu is required for persistent connections. Reccomended for Windows.",
+        "ext-openssl": "Enables encrypted connections."
+    },
+    "autoload": {
+        "psr-0": {
+            "PEAR2\\Net\\RouterOS\\": "src/",
+            "PEAR2\\Net\\Transmitter\\": "vendor/pear2/net_transmitter/src/",
+            "PEAR2\\Cache\\SHM": "vendor/pear2/cache_shm/src/",
+            "PEAR2\\Console\\Color": "vendor/pear2/console_color/src/"
+        }
+    },
+    "bin": ["scripts/roscon.php"],
+    "minimum-stability": "dev"
+}

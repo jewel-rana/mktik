@@ -1,0 +1,4 @@
+This Package provide a easy way to print text with color and style in command line.
+
+It has a simple interface, whereby you just create an object with the color and style information you want,
+and it will automatically be converted to an escape sequence when used as a string.
