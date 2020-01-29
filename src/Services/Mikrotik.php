@@ -31,7 +31,7 @@ class Mikrotik
         $this->service = ( Config::has('mikrotik.service') ) ? Config::get('mikrotik.service') : 'pppoe';
 
         //check mikrotik enabled then otherwize return with response and return true
-        return array('status' => true, 'msg' => 'Mikrotik not enabled in your settings.');
+//        return array('status' => true, 'msg' => 'Mikrotik not enabled in your settings.');
     }
 
     public function dump() {
@@ -54,54 +54,66 @@ class Mikrotik
 
     public function logs()
     {
-        $response = array('status' => true, 'msg' => '');
-        $this->connect();
-        if( $this->connected == false ) {
-            $response['msg'] = 'Could not connect to router.';
-            $response['status'] = false;
-            return $response;
+        $response = array('status' => false, 'msg' => '');
+        if( $this->mikrotik_enabled() ) {
+            $this->connect();
+            if( $this->connected == false ) {
+                $response['msg'] = 'Could not connect to router.';
+                $response['status'] = false;
+                return $response;
+            }
+            try{
+                $util = new Util( $this->client );
+                $response['data'] = $util->setMenu('/log')->getAll();
+            } catch (Exception $e) {
+                $response['msg'] = 'An error occured to collect system user logs';
+            }
+        } else {
+            $response['msg'] = 'Mikrotik configuration is not set.';
         }
-        try{
-            $util = new Util( $this->client );
-            $response['data'] = $util->setMenu('/log')->getAll();
-        } catch (Exception $e) {
-            $response['msg'] = 'An error occured to collect system user logs';
-        }
-
         return $response;
     }
 
     public function getAll()
     {
-        $response = array('status' => true, 'msg' => '');
-        $this->connect();
-        if( $this->connected == false ) {
-            $response['msg'] = 'Could not connect to router.';
-            $response['status'] = false;
-            return $response;
+        $response = array('status' => false, 'msg' => '', 'data' => []);
+        if( $this->mikrotik_enabled() ) {
+            $this->connect();
+            if( $this->connected == false ) {
+                $response['msg'] = 'Could not connect to router.';
+                $response['status'] = false;
+                return $response;
+            }
+            $response['data'] = $this->client->sendSync(new Request('/ppp/secret/print'))->getAllOfType(RouterOS\Response::TYPE_DATA);
+            $response['status'] = true;
+        } else {
+            $response['msg'] = 'Mikrotik configuration is not set.';
         }
-        $response['data'] = $this->client->sendSync(new Request('/ppp/secret/print'))->getAllOfType(RouterOS\Response::TYPE_DATA);
         return $response;
     }
 
     public function get( $id = null )
     {
         $response = ['status' => false, 'msg' => ''];
-        $this->connect();
-        if( $this->connected == false ) {
-            $response['msg'] = 'Could not connect to router.';
-            return $response;
-        }
-        if( $id != null ) {
-            $customer = new Request('/ppp/secret/getall');
-            $customer->setQuery(Query::where('.id', $id));
-            $info = $this->client->sendSync($customer);
-            if ( !empty( $info[0] ) ) :
-                $response['status'] = true;
-                $response['data'] = $info[0];
-            endif;
+        if( $this->mikrotik_enabled() ) {
+            $this->connect();
+            if( $this->connected == false ) {
+                $response['msg'] = 'Could not connect to router.';
+                return $response;
+            }
+            if( $id != null ) {
+                $customer = new Request('/ppp/secret/getall');
+                $customer->setQuery(Query::where('.id', $id));
+                $info = $this->client->sendSync($customer);
+                if ( !empty( $info[0] ) ) :
+                    $response['status'] = true;
+                    $response['data'] = $info[0];
+                endif;
+            } else {
+                $response['msg'] = 'Mikrotik ID not provided!';
+            }
         } else {
-            $response['msg'] = 'Mikrotik ID not provided!';
+            $response['msg'] = 'Mikrotik configuration is not set.';
         }
 
         return $response;
@@ -109,29 +121,32 @@ class Mikrotik
 
     public function getByName( $name = '' ) {
         $response = array('status' => false, 'msg' => '');
-        $this->connect();
-        if( $this->connected == false ) {
-            $response['msg'] = 'Could not connect to router.';
-            return $response;
-        }
+        if( $this->mikrotik_enabled() ) {
+            $this->connect();
+            if( $this->connected == false ) {
+                $response['msg'] = 'Could not connect to router.';
+                return $response;
+            }
 
-        if( $name ) :
-            $customer = new Request('/ppp/secret/getall');
-            $customer->setArgument('.proplist', '.id,name,profile,service');
-            $customer->setQuery(Query::where('name', $name));
-            $info = $this->client->sendSync($customer);
-            if ( !empty( $info[0] ) ) :
-                $response['status'] = true;
-                $response['data'] = $info[0];
+            if( $name ) :
+                $customer = new Request('/ppp/secret/getall');
+                $customer->setArgument('.proplist', '.id,name,profile,disabled');
+                $customer->setQuery(Query::where('name', $name));
+                $info = $this->client->sendSync($customer);
+                if ( !empty( $info[0] ) ) :
+                    $response['status'] = true;
+                    $response['data'] = $info[0];
+                endif;
+            else :
+                $response['msg'] = 'Customer username is empty.';
             endif;
-        else :
-            $response['msg'] = 'Customer username is empty.';
-        endif;
-
+        } else {
+            $response['msg'] = 'Mikrotik configuration is not set.';
+        }
         return $response;
     }
 
-    public function create( $params = array() ) {
+    public function create( $customer ) {
         $response = ['status' => false, 'msg' => ''];
         //check mikrotike enabled
         if( $this->mikrotik_enabled() ) {
@@ -140,19 +155,19 @@ class Mikrotik
                 $response['msg'] = 'Router not connected';
                 return $response;
             }
-            $customer = new RouterOS\Request('/ppp/secret/add');
-            $customer->setArgument('name', $params['name']);
-            $customer->setArgument('profile', $params['profile']);
-            $customer->setArgument('password', $params['password']);
-            $customer->setArgument('service', $this->service);
-            $customer->setArgument('comment', $params['comment']);
-            $customer->setArgument('disabled', $params['status']);
+            $user = new RouterOS\Request('/ppp/secret/add');
+            $user->setArgument('name', $customer->customerID);
+            $user->setArgument('profile', $customer->package['code']);
+            $user->setArgument('password', '123456');
+            $user->setArgument('service', $this->service);
+            $user->setArgument('comment', 'Via api [pkg - ' . $customer->package->name . ', price- ' . $customer->package['price'] . 'Tk., date- ' . date('d/m/Y'));
+            $user->setArgument('disabled', 'no');
 
-            if ($this->client->sendSync($customer)->getType() !== RouterOS\Response::TYPE_FINAL) {
+            if ($this->client->sendSync($user)->getType() !== RouterOS\Response::TYPE_FINAL) {
                 $response['msg'] = 'Sorry! cannot create customer';
             } else {
-                $this->client->loop();
-                $responses = $this->client->extractNewResponses();
+//                $this->client->loop();
+                $response['id'] = $this->getByName( $customer->customerID );
                 $response['status'] = true;
                 $response['msg'] = 'Customer has been successfully created';
             }
