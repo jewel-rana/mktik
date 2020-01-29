@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpdoc>
+    <title>PEAR2_Cache_SHM documentation</title>
+    <parser>
+        <default-package-name>PEAR2_Cache_SHM</default-package-name>
+        <target>Reference/PhpDocumentor/Cache</target>
+        <extensions>
+            <extension>php</extension>
+        </extensions>
+    </parser>
+    <files>
+        <directory>../src/PEAR2/Cache/SHM</directory>
+        <file>../src/PEAR2/Cache/SHM.php</file>
+    </files>
+    <transformer>
+        <target>Reference/PhpDocumentor/Doc</target>
+    </transformer>
+</phpdoc>

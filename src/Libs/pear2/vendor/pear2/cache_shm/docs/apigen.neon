@@ -1,0 +1,17 @@
+title: PEAR2_Cache_SHM documentation
+
+source:
+  - ../src
+
+destination: Reference/ApiGen/Doc
+
+extensions:
+  - php
+
+charset:
+  - UTF-8
+
+accessLevels:
+  - public
+
+tree: true

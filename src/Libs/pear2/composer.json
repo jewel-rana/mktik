@@ -1,11 +1,10 @@
 {
-    "name": "rajtika/mikrotik",
-    "description": "Mikrotik router management through pear2 library",
+    "name": "jewelrana/mikrotik",
     "type": "library",
     "license": "MIT",
     "authors": [
         {
-            "name": "Jewel Rana",
+            "name": "Jewel rana",
             "email": "jewelrana.dev@gmail.com"
         }
     ],
